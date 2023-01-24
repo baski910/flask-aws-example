@@ -14,7 +14,8 @@ def create_app():
 
     @app.route('/')
     def home():
-        return render_template("index.html")
+        books = db.session.query(Book).all()
+        return render_template("index.html", books = books)
 
     @app.route('/addbook',methods=['GET','POST'])
     def addbook():
@@ -24,9 +25,9 @@ def create_app():
             book = Book(booktitle=title,bookauthor=author)
             db.session.add(book)
             db.session.commit()
-            return redirect(url_for('index')))
+            return redirect(url_for('home'))
 
-        return redirect(url_for('index')))
+        return redirect(url_for('home'))
 
    return app
 
